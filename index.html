@@ -1,1 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adobe Graphic Design Quiz</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
 
+        #quiz-wrapper {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .question-block:last-of-type {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options-list li {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .options-list li:hover {
+            background-color: #e9ecef;
+        }
+
+        .options-list input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        #submit-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+
+        #submit-btn:hover {
+            background-color: #155ab6;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .correct {
+            background-color: #e6f4ea;
+            color: #1e8e3e;
+            border: 1px solid #a8d5b9;
+        }
+
+        .incorrect {
+            background-color: #fce8e6;
+            color: #d93025;
+            border: 1px solid #f2b9b5;
+        }
+
+        #score-container {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #e8f0fe;
+            color: #1967d2;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-wrapper">
+    <h1>Adobe Graphic Design Quiz 🧠</h1>
+    <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="submit" id="submit-btn">Check Answers</button>
+    </form>
+    <div id="score-container" style="display:none;"></div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1. What is the primary function of layers in Photoshop?",
+            options: ["To organize and separate different elements of a design", "To apply filters to an entire image", "To adjust the resolution of an image", "To crop images"],
+            answer: "To organize and separate different elements of a design"
+        },
+        {
+            question: "2. Which tool is used to make freehand selections in Photoshop?",
+            options: ["Magic Wand Tool", "Lasso Tool", "Rectangular Marquee Tool", "Pen Tool"],
+            answer: "Lasso Tool"
+        },
+        {
+            question: "3. What is the purpose of a layer mask?",
+            options: ["To change the color of an image", "To hide or reveal parts of a layer without permanently altering it", "To merge multiple layers into one", "To duplicate a layer"],
+            answer: "To hide or reveal parts of a layer without permanently altering it"
+        },
+        {
+            question: "4. Which of the following is NOT a selection tool in Photoshop?",
+            options: ["Quick Selection Tool", "Clone Stamp Tool", "Magic Wand Tool", "Pen Tool"],
+            answer: "Clone Stamp Tool"
+        },
+        {
+            question: "5. Which adjustment would you use to correct the brightness and contrast of an image?",
+            options: ["Levels", "Gradient Map", "Invert", "Hue/Saturation"],
+            answer: "Levels"
+        },
+        {
+            question: "6. What is the advantage of using Smart Objects?",
+            options: ["They allow for non-destructive editing", "They increase the file size significantly", "They cannot be edited once created", "They automatically merge all layers"],
+            answer: "They allow for non-destructive editing"
+        },
+        {
+            question: "7. Which tool is best for removing blemishes and small imperfections from a photo?",
+            options: ["Healing Brush Tool", "Pen Tool", "Gradient Tool", "Quick Selection Tool"],
+            answer: "Healing Brush Tool"
+        },
+        {
+            question: "8. Which blending mode multiplies the base color by the blend color, resulting in a darker image?",
+            options: ["Screen", "Multiply", "Overlay", "Soft Light"],
+            answer: "Multiply"
+        },
+        {
+            question: "9. Which of the following allows you to create and manage vector shapes in Photoshop?",
+            options: ["Brush Tool", "Pen Tool", "Gradient Tool", "Smudge Tool"],
+            answer: "Pen Tool"
+        },
+        {
+            question: "10. What is the use of the Clone Stamp Tool?",
+            options: ["To duplicate part of an image by painting over it with a sampled area", "To create selections based on color", "To adjust the brightness of an image", "To blur specific areas of an image"],
+            answer: "To duplicate part of an image by painting over it with a sampled area"
+        },
+        {
+            question: "11. Which filter would you apply to sharpen the details of an image?",
+            options: ["Gaussian Blur", "Unsharp Mask", "Liquify", "Lens Flare"],
+            answer: "Unsharp Mask"
+        },
+        {
+            question: "12. Which format should you use when saving an image with transparency?",
+            options: ["JPEG", "BMP", "PNG", "TIFF"],
+            answer: "PNG"
+        },
+        {
+            question: "13. What does the Dodge Tool do?",
+            options: ["Darkens areas of an image", "Lightens areas of an image", "Blurs areas of an image", "Adds noise to an image"],
+            answer: "Lightens areas of an image"
+        },
+        {
+            question: "14. Which of the following is a non-destructive way to edit colors in an image?",
+            options: ["Using the Eraser Tool", "Applying an Adjustment Layer", "Directly painting over the image", "Flattening the image"],
+            answer: "Applying an Adjustment Layer"
+        },
+        {
+            question: "15. What is the function of the Spot Healing Brush Tool?",
+            options: ["To paint with a predefined pattern", "To repair and blend imperfections using surrounding pixels", "To select a color from an image", "To draw straight lines"],
+            answer: "To repair and blend imperfections using surrounding pixels"
+        },
+        {
+            question: "16. Which key combination is used to quickly duplicate a layer in Photoshop?",
+            options: ["Ctrl + T", "Ctrl + J", "Ctrl + D", "Ctrl + E"],
+            answer: "Ctrl + J"
+        },
+        {
+            question: "17. What is the purpose of the Quick Mask mode?",
+            options: ["To quickly erase part of an image", "To create a selection using a brush", "To apply filters more rapidly", "To crop an image quickly"],
+            answer: "To create a selection using a brush"
+        },
+        {
+            question: "18. Which panel would you use to apply non-destructive color corrections?",
+            options: ["Layers Panel", "Channels Panel", "History Panel", "Adjustments Panel"],
+            answer: "Adjustments Panel"
+        },
+        {
+            question: "19. What does the term 'non-destructive editing' refer to?",
+            options: ["Editing that permanently changes the original image", "Editing that can be undone or modified later without altering the original image", "Editing that only applies to vector graphics", "Editing that reduces file size"],
+            answer: "Editing that can be undone or modified later without altering the original image"
+        },
+        {
+            question: "20. Which of the following tools is used to create smooth, curved paths and shapes?",
+            options: ["Brush Tool", "Polygonal Lasso Tool", "Pen Tool", "Gradient Tool"],
+            answer: "Pen Tool"
+        }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    const quizForm = document.getElementById('quiz-form');
+    const scoreContainer = document.getElementById('score-container');
+
+    function buildQuiz() {
+        quizData.forEach((currentQuestion, questionNumber) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.classList.add('question-block');
+            questionBlock.setAttribute('id', `question-${questionNumber}`);
+
+            const questionText = document.createElement('p');
+            questionText.classList.add('question-text');
+            questionText.innerText = currentQuestion.question;
+            questionBlock.appendChild(questionText);
+
+            const optionsList = document.createElement('ul');
+            optionsList.classList.add('options-list');
+
+            currentQuestion.options.forEach(option => {
+                const li = document.createElement('li');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question${questionNumber}`;
+                radio.value = option;
+                
+                const label = document.createElement('label');
+                label.appendChild(radio);
+                label.append(option);
+                
+                li.appendChild(label);
+                optionsList.appendChild(li);
+            });
+
+            questionBlock.appendChild(optionsList);
+            const resultDiv = document.createElement('div');
+            resultDiv.classList.add('result');
+            questionBlock.appendChild(resultDiv);
+            quizContainer.appendChild(questionBlock);
+        });
+    }
+
+    function showResults() {
+        let score = 0;
+        quizData.forEach((currentQuestion, questionNumber) => {
+            const questionBlock = document.getElementById(`question-${questionNumber}`);
+            const resultDiv = questionBlock.querySelector('.result');
+            const selector = `input[name=question${questionNumber}]:checked`;
+            const userAnswerNode = quizContainer.querySelector(selector);
+            const userAnswer = userAnswerNode ? userAnswerNode.value : undefined;
+
+            if (userAnswer === currentQuestion.answer) {
+                score++;
+                resultDiv.innerHTML = '✅ Correct!';
+                resultDiv.className = 'result correct';
+            } else {
+                resultDiv.innerHTML = `❌ Incorrect. The correct answer is: <strong>${currentQuestion.answer}</strong>`;
+                resultDiv.className = 'result incorrect';
+            }
+        });
+        
+        scoreContainer.innerHTML = `Your Score: ${score} out of ${quizData.length}`;
+        scoreContainer.style.display = 'block';
+    }
+
+    quizForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showResults();
+    });
+
+    buildQuiz();
+</script>
+
+</body>
+</html>
