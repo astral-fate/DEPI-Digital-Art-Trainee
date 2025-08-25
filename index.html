@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adobe Graphic Design Quiz (Instant Feedback)</title>
+    <title>Comprehensive Photoshop Quiz (Instant Feedback)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -20,7 +20,7 @@
         #quiz-wrapper {
             background-color: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px M15px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
             padding: 30px;
@@ -41,6 +41,9 @@
             border-radius: 8px;
             background-color: #e8f0fe;
             color: #1967d2;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
         }
 
         .question-block {
@@ -124,120 +127,377 @@
 <body>
 
 <div id="quiz-wrapper">
-    <h1>Adobe Graphic Design Quiz 🧠</h1>
-    <div id="score-container">Score: 0 / 20</div>
+    <h1>Comprehensive Photoshop Quiz 🧠</h1>
+    <div id="score-container">Score: 0 / 0</div>
     <div id="quiz-container"></div>
 </div>
 
 <script>
     const quizData = [
+        // Original 20 Questions
         {
-            question: "1. What is the primary function of layers in Photoshop?",
+            question: "What is the primary function of layers in Photoshop?",
             options: ["To organize and separate different elements of a design", "To apply filters to an entire image", "To adjust the resolution of an image", "To crop images"],
             answer: "To organize and separate different elements of a design"
         },
         {
-            question: "2. Which tool is used to make freehand selections in Photoshop?",
+            question: "Which tool is used to make freehand selections in Photoshop?",
             options: ["Magic Wand Tool", "Lasso Tool", "Rectangular Marquee Tool", "Pen Tool"],
             answer: "Lasso Tool"
         },
         {
-            question: "3. What is the purpose of a layer mask?",
+            question: "What is the purpose of a layer mask?",
             options: ["To change the color of an image", "To hide or reveal parts of a layer without permanently altering it", "To merge multiple layers into one", "To duplicate a layer"],
             answer: "To hide or reveal parts of a layer without permanently altering it"
         },
         {
-            question: "4. Which of the following is NOT a selection tool in Photoshop?",
+            question: "Which of the following is NOT a selection tool in Photoshop?",
             options: ["Quick Selection Tool", "Clone Stamp Tool", "Magic Wand Tool", "Pen Tool"],
             answer: "Clone Stamp Tool"
         },
         {
-            question: "5. Which adjustment would you use to correct the brightness and contrast of an image?",
+            question: "Which adjustment would you use to correct the brightness and contrast of an image?",
             options: ["Levels", "Gradient Map", "Invert", "Hue/Saturation"],
             answer: "Levels"
         },
         {
-            question: "6. What is the advantage of using Smart Objects?",
+            question: "What is the advantage of using Smart Objects?",
             options: ["They allow for non-destructive editing", "They increase the file size significantly", "They cannot be edited once created", "They automatically merge all layers"],
             answer: "They allow for non-destructive editing"
         },
         {
-            question: "7. Which tool is best for removing blemishes and small imperfections from a photo?",
+            question: "Which tool is best for removing blemishes and small imperfections from a photo?",
             options: ["Healing Brush Tool", "Pen Tool", "Gradient Tool", "Quick Selection Tool"],
             answer: "Healing Brush Tool"
         },
         {
-            question: "8. Which blending mode multiplies the base color by the blend color, resulting in a darker image?",
+            question: "Which blending mode multiplies the base color by the blend color, resulting in a darker image?",
             options: ["Screen", "Multiply", "Overlay", "Soft Light"],
             answer: "Multiply"
         },
         {
-            question: "9. Which of the following allows you to create and manage vector shapes in Photoshop?",
+            question: "Which of the following allows you to create and manage vector shapes in Photoshop?",
             options: ["Brush Tool", "Pen Tool", "Gradient Tool", "Smudge Tool"],
             answer: "Pen Tool"
         },
         {
-            question: "10. What is the use of the Clone Stamp Tool?",
+            question: "What is the use of the Clone Stamp Tool?",
             options: ["To duplicate part of an image by painting over it with a sampled area", "To create selections based on color", "To adjust the brightness of an image", "To blur specific areas of an image"],
             answer: "To duplicate part of an image by painting over it with a sampled area"
         },
         {
-            question: "11. Which filter would you apply to sharpen the details of an image?",
+            question: "Which filter would you apply to sharpen the details of an image?",
             options: ["Gaussian Blur", "Unsharp Mask", "Liquify", "Lens Flare"],
             answer: "Unsharp Mask"
         },
         {
-            question: "12. Which format should you use when saving an image with transparency?",
+            question: "Which format should you use when saving an image with transparency?",
             options: ["JPEG", "BMP", "PNG", "TIFF"],
             answer: "PNG"
         },
         {
-            question: "13. What does the Dodge Tool do?",
+            question: "What does the Dodge Tool do?",
             options: ["Darkens areas of an image", "Lightens areas of an image", "Blurs areas of an image", "Adds noise to an image"],
             answer: "Lightens areas of an image"
         },
         {
-            question: "14. Which of the following is a non-destructive way to edit colors in an image?",
+            question: "Which of the following is a non-destructive way to edit colors in an image?",
             options: ["Using the Eraser Tool", "Applying an Adjustment Layer", "Directly painting over the image", "Flattening the image"],
             answer: "Applying an Adjustment Layer"
         },
         {
-            question: "15. What is the function of the Spot Healing Brush Tool?",
+            question: "What is the function of the Spot Healing Brush Tool?",
             options: ["To paint with a predefined pattern", "To repair and blend imperfections using surrounding pixels", "To select a color from an image", "To draw straight lines"],
             answer: "To repair and blend imperfections using surrounding pixels"
         },
         {
-            question: "16. Which key combination is used to quickly duplicate a layer in Photoshop?",
+            question: "Which key combination is used to quickly duplicate a layer in Photoshop?",
             options: ["Ctrl + T", "Ctrl + J", "Ctrl + D", "Ctrl + E"],
             answer: "Ctrl + J"
         },
         {
-            question: "17. What is the purpose of the Quick Mask mode?",
+            question: "What is the purpose of the Quick Mask mode?",
             options: ["To quickly erase part of an image", "To create a selection using a brush", "To apply filters more rapidly", "To crop an image quickly"],
             answer: "To create a selection using a brush"
         },
         {
-            question: "18. Which panel would you use to apply non-destructive color corrections?",
+            question: "Which panel would you use to apply non-destructive color corrections?",
             options: ["Layers Panel", "Channels Panel", "History Panel", "Adjustments Panel"],
             answer: "Adjustments Panel"
         },
         {
-            question: "19. What does the term 'non-destructive editing' refer to?",
+            question: "What does the term 'non-destructive editing' refer to?",
             options: ["Editing that permanently changes the original image", "Editing that can be undone or modified later without altering the original image", "Editing that only applies to vector graphics", "Editing that reduces file size"],
             answer: "Editing that can be undone or modified later without altering the original image"
         },
         {
-            question: "20. Which of the following tools is used to create smooth, curved paths and shapes?",
+            question: "Which of the following tools is used to create smooth, curved paths and shapes?",
             options: ["Brush Tool", "Polygonal Lasso Tool", "Pen Tool", "Gradient Tool"],
             answer: "Pen Tool"
+        },
+
+        // NEW QUESTIONS FROM TEXT FILE
+        {
+            question: "You want to remove pimples and small skin spots from a portrait. Which tool is best?",
+            options: ["Clone Stamp Tool", "Spot Healing Brush Tool", "Smudge Tool", "Blur Tool"],
+            answer: "Spot Healing Brush Tool"
+        },
+        {
+            question: "You need to isolate a person from a busy background quickly. Which feature should you use first?",
+            options: ["Crop Tool", "Select → Subject", "Dodge Tool", "Gaussian Blur"],
+            answer: "Select → Subject"
+        },
+        {
+            question: "Which adjustment is best for correcting overall brightness and contrast in an image?",
+            options: ["Levels", "Clone Stamp", "Quick Mask", "Smudge Tool"],
+            answer: "Levels"
+        },
+        {
+            question: "You want to resize an object in a layer without losing quality. What should you do?",
+            options: ["Convert the layer to Smart Object, then use Free Transform", "Use Eraser Tool on the edges", "Use Dodge Tool", "Flatten the image"],
+            answer: "Convert the layer to Smart Object, then use Free Transform"
+        },
+        {
+            question: "To fix lens distortion (like a curved building in a wide-angle photo), which option should you use?",
+            options: ["Liquify Filter", "Lens Correction / Perspective Warp", "Blur Tool", "Crop Tool"],
+            answer: "Lens Correction / Perspective Warp"
+        },
+        {
+            question: "If you want to create a smooth blend between two images in one document, which method works best?",
+            options: ["Clone Stamp Tool", "Layer Mask with Gradient", "Dodge Tool", "Red Eye Tool"],
+            answer: "Layer Mask with Gradient"
+        },
+        {
+            question: "To sharpen fine details in an image, which filter should you apply?",
+            options: ["Gaussian Blur", "Smudge Filter", "Unsharp Mask", "Lens Correction"],
+            answer: "Unsharp Mask"
+        },
+        {
+            question: "What is the difference between a Raster Layer and a Smart Object in Photoshop?",
+            options: ["Raster layers are scalable without quality loss, Smart Objects are not", "Smart Objects are scalable and non-destructive, Raster layers lose quality when resized", "Both are the same", "Raster layers only store text"],
+            answer: "Smart Objects are scalable and non-destructive, Raster layers lose quality when resized"
+        },
+        {
+            question: "Which option in Photoshop allows you to apply the same adjustment to multiple layers at once without merging them?",
+            options: ["Adjustment Layers", "Layer Styles", "Flatten Image", "Clipping Mask"],
+            answer: "Adjustment Layers"
+        },
+        {
+            question: "In the Curves adjustment, pulling the curve upward in the midtone area does what?",
+            options: ["Darkens the midtones", "Lightens the midtones", "Increases saturation", "Sharpens the image"],
+            answer: "Lightens the midtones"
+        },
+        {
+            question: "What does the term “Non-Destructive Editing” mean in Photoshop?",
+            options: ["Making edits that permanently change the pixels", "Making edits without permanently altering the original image data", "Deleting layers to save space", "Using destructive filters only"],
+            answer: "Making edits without permanently altering the original image data"
+        },
+        {
+            question: "Which filter would you use to correct perspective distortion in architectural photography?",
+            options: ["Gaussian Blur", "Liquify", "Lens Correction / Perspective Warp", "Sharpen"],
+            answer: "Lens Correction / Perspective Warp"
+        },
+        {
+            question: "What is the main difference between “Opacity” and “Fill” in the Layers Panel?",
+            options: ["Both are the same", "Fill affects only layer styles, Opacity affects the entire layer (content + styles)", "Opacity affects only styles, Fill affects content", "Fill reduces sharpness"],
+            answer: "Fill affects only layer styles, Opacity affects the entire layer (content + styles)"
+        },
+        {
+            question: "Which Photoshop feature allows you to combine multiple images with smooth transitions using masks?",
+            options: ["Merge Down", "Layer Comps", "Layer Mask / Gradient Mask", "Quick Export"],
+            answer: "Layer Mask / Gradient Mask"
+        },
+        {
+            question: "What is the shortcut to create a clipping mask?",
+            options: ["Ctrl + Alt + G", "Ctrl + Shift + G", "Ctrl + E", "Alt + Ctrl + M"],
+            answer: "Ctrl + Alt + G"
+        },
+        {
+            question: "In Camera Raw filter, which slider adjusts the difference between the darkest and lightest areas of the image?",
+            options: ["Clarity", "Contrast", "Exposure", "Highlights"],
+            answer: "Contrast"
+        },
+        {
+            question: "What is the shortcut to duplicate a layer?",
+            options: ["Ctrl + D", "Ctrl + J", "Ctrl + Shift + J", "Ctrl + N"],
+            answer: "Ctrl + J"
+        },
+        {
+            question: "Which tool is best for selecting objects with complex edges like hair?",
+            options: ["Polygonal Lasso Tool", "Magic Wand Tool", "Quick Selection Tool + Refine Edge", "Crop Tool"],
+            answer: "Quick Selection Tool + Refine Edge"
+        },
+        {
+            question: "What is the function of the History Panel?",
+            options: ["Shows adjustment layers", "Tracks and lets you undo/redo multiple steps", "Displays all channels", "Edits text properties"],
+            answer: "Tracks and lets you undo/redo multiple steps"
+        },
+        {
+            question: "Which file format preserves all layers in Photoshop?",
+            options: ["JPEG", "PNG", "PSD", "GIF"],
+            answer: "PSD"
+        },
+        {
+            question: "What does the Eyedropper Tool do?",
+            options: ["Paints pixels", "Samples color from an image", "Blurs selected area", "Removes background"],
+            answer: "Samples color from an image"
+        },
+        {
+            question: "Which blending mode makes black invisible and shows only lighter pixels?",
+            options: ["Multiply", "Screen", "Overlay", "Soft Light"],
+            answer: "Screen"
+        },
+        {
+            question: "What is the shortcut for Free Transform?",
+            options: ["Ctrl + T", "Ctrl + F", "Ctrl + E", "Ctrl + Shift + T"],
+            answer: "Ctrl + T"
+        },
+        {
+            question: "What does the Spot Healing Brush Tool do?",
+            options: ["Removes imperfections by blending with surrounding pixels automatically", "Clones pixels from a source area", "Blurs selected details", "Paints with sampled pixels"],
+            answer: "Removes imperfections by blending with surrounding pixels automatically"
+        },
+        {
+            question: "Which panel allows you to control layer visibility, order, and blending modes?",
+            options: ["Channels Panel", "History Panel", "Layers Panel", "Navigator Panel"],
+            answer: "Layers Panel"
+        },
+        {
+            question: "What is the shortcut for creating a new layer?",
+            options: ["Ctrl + Shift + N", "Ctrl + J", "Ctrl + N", "Alt + Ctrl + L"],
+            answer: "Ctrl + Shift + N"
+        },
+        {
+            question: "Which panel allows you to see and edit the color channels of an image?",
+            options: ["Layers Panel", "Adjustments Panel", "Channels Panel", "History Panel"],
+            answer: "Channels Panel"
+        },
+        {
+            question: "What does the Crop Tool do?",
+            options: ["Cuts out unwanted parts of an image", "Blurs edges", "Creates selections", "Resizes layers"],
+            answer: "Cuts out unwanted parts of an image"
+        },
+        {
+            question: "Which file format should be used for web graphics with animation?",
+            options: ["JPEG", "GIF", "PNG", "PSD"],
+            answer: "GIF"
+        },
+        {
+            question: "Which tool removes red-eye in a photo?",
+            options: ["Dodge Tool", "Red Eye Tool", "Healing Brush Tool", "Blur Tool"],
+            answer: "Red Eye Tool"
+        },
+        {
+            question: "Which option allows you to reduce the file size while saving for web?",
+            options: ["Save As", "Save for Web (Legacy)", "Export As", "Quick Export"],
+            answer: "Save for Web (Legacy)"
+        },
+        {
+            question: "Which tool can be used to paint with sampled pixels?",
+            options: ["Brush Tool", "Clone Stamp Tool", "Healing Brush Tool", "Eraser Tool"],
+            answer: "Clone Stamp Tool"
+        },
+        {
+            question: "What is the purpose of Smart Filters?",
+            options: ["Apply filters destructively", "Apply filters non-destructively to Smart Objects", "Convert filters to shapes", "Reduce file size"],
+            answer: "Apply filters non-destructively to Smart Objects"
+        },
+        {
+            question: "Which panel allows you to manage text properties?",
+            options: ["Layers Panel", "Character Panel", "History Panel", "Navigator Panel"],
+            answer: "Character Panel"
+        },
+        {
+            question: "Which tool quickly selects areas of similar color?",
+            options: ["Crop Tool", "Magic Wand Tool", "Pen Tool", "Dodge Tool"],
+            answer: "Magic Wand Tool"
+        },
+        {
+            question: "Which color mode is used for print design?",
+            options: ["RGB", "CMYK", "Grayscale", "Indexed Color"],
+            answer: "CMYK"
+        },
+        {
+            question: "Which feature lets you smoothly combine multiple images into one?",
+            options: ["Blending Modes", "Clone Stamp Tool", "Hue/Saturation", "Curves"],
+            answer: "Blending Modes"
+        },
+        {
+            question: "Which tool softens or blurs areas of an image?",
+            options: ["Dodge Tool", "Smudge Tool", "Blur Tool", "Gradient Tool"],
+            answer: "Blur Tool"
+        },
+        {
+            question: "In the Layers Panel, which option controls transparency?",
+            options: ["Mask", "Fill", "Opacity", "Blend If"],
+            answer: "Opacity"
+        },
+        {
+            question: "Which filter is used to correct lens distortions and perspective?",
+            options: ["Liquify", "Lens Correction", "Gaussian Blur", "Sharpen"],
+            answer: "Lens Correction"
+        },
+        {
+            question: "Which adjustment uses a diagonal curve graph to adjust tones?",
+            options: ["Levels", "Curves", "Hue/Saturation", "Invert"],
+            answer: "Curves"
+        },
+        {
+            question: "Which blending mode lightens the base color by the blend color?",
+            options: ["Screen", "Multiply", "Overlay", "Darken"],
+            answer: "Screen"
+        },
+        {
+            question: "Which is the native Photoshop format that preserves all layers and settings?",
+            options: ["JPEG", "PSD", "PNG", "TIFF"],
+            answer: "PSD"
+        },
+        {
+            question: "What is an advantage of Smart Objects?",
+            options: ["Non-destructive editing", "Merge layers automatically", "Reduce file size always", "Cannot be resized"],
+            answer: "Non-destructive editing"
+        },
+        {
+            question: "Which tool can distort, resize, or reshape pixels interactively?",
+            options: ["Liquify Filter", "Crop Tool", "Pen Tool", "Dodge Tool"],
+            answer: "Liquify Filter"
+        },
+        {
+            question: "What is the function of the Move Tool in Photoshop?",
+            options: ["To resize an image", "To move a selected area or layer", "To adjust brightness and contrast", "To create a selection"],
+            answer: "To move a selected area or layer"
+        },
+        {
+            question: "Which tool would you use to cut out a subject from the background automatically?",
+            options: ["Pen Tool", "Magic Eraser Tool", "Quick Selection Tool", "Crop Tool"],
+            answer: "Quick Selection Tool"
+        },
+        {
+            question: "What is the main purpose of the Gradient Tool?",
+            options: ["To apply smooth color transitions", "To blur areas of an image", "To paint with a soft brush", "To sharpen image edges"],
+            answer: "To apply smooth color transitions"
+        },
+        {
+            question: "Which color mode is most commonly used for digital screen designs?",
+            options: ["CMYK", "Grayscale", "RGB", "Indexed Color"],
+            answer: "RGB"
+        },
+        {
+            question: "Which adjustment is best for changing the overall color balance of an image?",
+            options: ["Hue/Saturation", "Levels", "Curves", "Crop"],
+            answer: "Hue/Saturation"
         }
     ];
 
     const quizContainer = document.getElementById('quiz-container');
     const scoreContainer = document.getElementById('score-container');
     let score = 0;
+    let questionsAnswered = 0;
 
     function buildQuiz() {
+        // Update total score display
+        scoreContainer.innerHTML = `Score: 0 / ${quizData.length}`;
+
         quizData.forEach((currentQuestion, questionNumber) => {
             const questionBlock = document.createElement('div');
             questionBlock.classList.add('question-block');
@@ -247,7 +507,8 @@
 
             const questionText = document.createElement('p');
             questionText.classList.add('question-text');
-            questionText.innerText = currentQuestion.question;
+            // Add a number to the question text
+            questionText.innerText = `${questionNumber + 1}. ${currentQuestion.question}`;
             questionBlock.appendChild(questionText);
 
             const optionsList = document.createElement('ul');
@@ -296,6 +557,7 @@
             return;
         }
         optionsList.classList.add('answered');
+        questionsAnswered++;
 
         // Get the user's answer from the clicked item
         const userAnswer = clickedLi.querySelector('input').value;
@@ -312,7 +574,7 @@
         }
 
         // Update score display
-        scoreContainer.innerHTML = `Score: ${score} / ${quizData.length}`;
+        scoreContainer.innerHTML = `Score: ${score} / ${quizData.length} (${questionsAnswered} answered)`;
     }
 
     buildQuiz();
