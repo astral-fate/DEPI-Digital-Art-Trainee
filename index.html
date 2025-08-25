@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adobe Graphic Design Quiz</title>
+    <title>Adobe Graphic Design Quiz (Instant Feedback)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,7 +29,18 @@
         h1 {
             color: #1a73e8;
             text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #score-container {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
             margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e8f0fe;
+            color: #1967d2;
         }
 
         .question-block {
@@ -54,6 +65,23 @@
             margin: 0;
         }
 
+        /* Style for when a question has been answered */
+        .options-list.answered li {
+            pointer-events: none; /* Disables clicking on options */
+            opacity: 0.6;
+        }
+        .options-list.answered li.user-correct {
+             background-color: #e6f4ea;
+             border-color: #1e8e3e;
+             opacity: 1;
+        }
+         .options-list.answered li.user-incorrect {
+             background-color: #fce8e6;
+             border-color: #d93025;
+             opacity: 1;
+        }
+
+
         .options-list li {
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
@@ -70,25 +98,6 @@
 
         .options-list input[type="radio"] {
             margin-right: 10px;
-        }
-
-        #submit-btn {
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 15px 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            transition: background-color 0.2s;
-        }
-
-        #submit-btn:hover {
-            background-color: #155ab6;
         }
 
         .result {
@@ -110,27 +119,14 @@
             border: 1px solid #f2b9b5;
         }
 
-        #score-container {
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #e8f0fe;
-            color: #1967d2;
-        }
     </style>
 </head>
 <body>
 
 <div id="quiz-wrapper">
     <h1>Adobe Graphic Design Quiz 🧠</h1>
-    <form id="quiz-form">
-        <div id="quiz-container"></div>
-        <button type="submit" id="submit-btn">Check Answers</button>
-    </form>
-    <div id="score-container" style="display:none;"></div>
+    <div id="score-container">Score: 0 / 20</div>
+    <div id="quiz-container"></div>
 </div>
 
 <script>
@@ -238,14 +234,16 @@
     ];
 
     const quizContainer = document.getElementById('quiz-container');
-    const quizForm = document.getElementById('quiz-form');
     const scoreContainer = document.getElementById('score-container');
+    let score = 0;
 
     function buildQuiz() {
         quizData.forEach((currentQuestion, questionNumber) => {
             const questionBlock = document.createElement('div');
             questionBlock.classList.add('question-block');
-            questionBlock.setAttribute('id', `question-${questionNumber}`);
+            
+            // Store question number in a data attribute for later access
+            questionBlock.dataset.questionIndex = questionNumber;
 
             const questionText = document.createElement('p');
             questionText.classList.add('question-text');
@@ -270,6 +268,9 @@
                 optionsList.appendChild(li);
             });
 
+            // Add event listener to the list of options for this question
+            optionsList.addEventListener('click', checkAnswer);
+
             questionBlock.appendChild(optionsList);
             const resultDiv = document.createElement('div');
             resultDiv.classList.add('result');
@@ -278,33 +279,41 @@
         });
     }
 
-    function showResults() {
-        let score = 0;
-        quizData.forEach((currentQuestion, questionNumber) => {
-            const questionBlock = document.getElementById(`question-${questionNumber}`);
-            const resultDiv = questionBlock.querySelector('.result');
-            const selector = `input[name=question${questionNumber}]:checked`;
-            const userAnswerNode = quizContainer.querySelector(selector);
-            const userAnswer = userAnswerNode ? userAnswerNode.value : undefined;
+    function checkAnswer(event) {
+        // Find the list item (li) that was clicked
+        const clickedLi = event.target.closest('li');
+        if (!clickedLi) return; // Exit if the click was not on an 'li'
 
-            if (userAnswer === currentQuestion.answer) {
-                score++;
-                resultDiv.innerHTML = '✅ Correct!';
-                resultDiv.className = 'result correct';
-            } else {
-                resultDiv.innerHTML = `❌ Incorrect. The correct answer is: <strong>${currentQuestion.answer}</strong>`;
-                resultDiv.className = 'result incorrect';
-            }
-        });
+        // Find the parent elements
+        const optionsList = clickedLi.parentElement;
+        const questionBlock = optionsList.closest('.question-block');
+        const resultDiv = questionBlock.querySelector('.result');
+        const questionNumber = parseInt(questionBlock.dataset.questionIndex, 10);
+        const currentQuestion = quizData[questionNumber];
         
-        scoreContainer.innerHTML = `Your Score: ${score} out of ${quizData.length}`;
-        scoreContainer.style.display = 'block';
-    }
+        // Prevent re-answering
+        if (optionsList.classList.contains('answered')) {
+            return;
+        }
+        optionsList.classList.add('answered');
 
-    quizForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        showResults();
-    });
+        // Get the user's answer from the clicked item
+        const userAnswer = clickedLi.querySelector('input').value;
+        
+        if (userAnswer === currentQuestion.answer) {
+            score++;
+            resultDiv.innerHTML = '✅ Correct!';
+            resultDiv.className = 'result correct';
+            clickedLi.classList.add('user-correct'); // Highlight the selected correct answer
+        } else {
+            resultDiv.innerHTML = `❌ Incorrect. The correct answer is: <strong>${currentQuestion.answer}</strong>`;
+            resultDiv.className = 'result incorrect';
+            clickedLi.classList.add('user-incorrect'); // Highlight the selected incorrect answer
+        }
+
+        // Update score display
+        scoreContainer.innerHTML = `Score: ${score} / ${quizData.length}`;
+    }
 
     buildQuiz();
 </script>
